@@ -45,4 +45,4 @@ jobs:
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         local-dir: website/
-        server-dir: ci-cd.bestower.com/
+        server-dir: /ci-cd.bestower.com/

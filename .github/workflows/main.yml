@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: website
-        path: CI-CD_PROJECT/website/**
+        path: CI-CD_PROJECT/CI-CD_PROJECT/website/**
         if-no-files-found: error
         
     - name: 📂 Sync files

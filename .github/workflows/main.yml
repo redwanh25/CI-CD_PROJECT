@@ -41,8 +41,8 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: bestowers.org
+        server: redwan.pro #bestowers.org
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         local-dir: website/
-        server-dir: ci-cd.bestower.com/
+        server-dir: ci-cd.redwan.pro/ #ci-cd.bestower.com/

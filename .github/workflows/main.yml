@@ -29,20 +29,20 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Publish
-      run: dotnet publish CI-CD_PROJECT/CI-CD_PROJECT.csproj -c Release -o website
+      run: dotnet publish CI-CD_PROJECT/CI-CD_PROJECT.csproj -c Release -o website/
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: website
+        name: 🌐 Website
         path: website/
         if-no-files-found: error
         
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: 50.62.160.241
+        server: bestowers.org
         username: ${{ secrets.ftp_username }}
         password: ${{ secrets.ftp_password }}
         local-dir: website/
-        server-dir: /ci-cd.bestower.com/
+        server-dir: ci-cd.bestower.com/

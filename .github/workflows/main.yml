@@ -10,39 +10,22 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  restart-app-pool:
+   runs-on: ubuntu-latest
+   env:
+      server: 'iis-server.domain.com'
+      pool-name: 'website-pool'
 
-    steps:
-    - name: 🚚 Get Latest Code
+   steps:
+    - name: Checkout
       uses: actions/checkout@v3
-    
-    - name: ⚙️ Setup .NET
-      uses: actions/setup-dotnet@v3
+    - name: IIS stop
+      # You may also reference the major or major.minor version
+      uses: im-open/app-pool-action@v2.0.3
       with:
-        dotnet-version: 6.0.x
-    
-    - name: 📙 Restore Dependencies
-      run: dotnet restore
-    
-    - name: 🔨 Build
-      run: dotnet build --no-restore
+        action: 'stop'
+        server: '103.125.254.20'                    #${{ env.server }}
+        app-pool-name: 'ci-cd.redwan.pro'           #${{ env.pool-name }}
+        service-account-id: 'redwan'                #${{ secrets.iis_admin_user }}
+        service-account-password: 's8dagn#$4REj'    #${{ secrets.iis_admin_password }}
 
-    - name: 📦 Publish
-      run: dotnet publish CI-CD_PROJECT/CI-CD_PROJECT.csproj -c Release -o website/
-    
-    - name: 📁 Upload Build Artifacts to Local
-      uses: actions/upload-artifact@v3
-      with:
-        name: Build Artifacts
-        path: website/
-        if-no-files-found: error
-        
-    - name: 📂 Upload Build Artifacts to Server
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: redwan.pro
-        username: ${{ secrets.ftp_username }}
-        password: ${{ secrets.ftp_password }}
-        local-dir: website/
-        server-dir: ci-cd.redwan.pro/webroot/

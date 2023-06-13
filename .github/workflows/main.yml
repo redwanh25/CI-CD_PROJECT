@@ -25,7 +25,7 @@ jobs:
       with:
         action: 'stop'
         server: 103.125.254.20                    #${{ env.server }}
-        app-pool-name: 'ci-cd.redwan.pro'           #${{ env.pool-name }}
-        service-account-id: 'redwan'                #${{ secrets.iis_admin_user }}
-        service-account-password: 's8dagn#$4REj'    #${{ secrets.iis_admin_password }}
+        app-pool-name: ci-cd.redwan.pro           #${{ env.pool-name }}
+        service-account-id: redwan                #${{ secrets.iis_admin_user }}
+        service-account-password: s8dagn#$4REj    #${{ secrets.iis_admin_password }}
 

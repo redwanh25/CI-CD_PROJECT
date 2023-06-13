@@ -22,13 +22,13 @@ jobs:
       with:
         dotnet-version: 6.0.x
     
-    - name: 🚀 Restore dependencies
+    - name: 📙 Restore dependencies
       run: dotnet restore
     
     - name: 🔨 Build
       run: dotnet build --no-restore
 
-    - name: 🔨 Publish
+    - name: 📦 Publish
       run: dotnet publish CI-CD_PROJECT/CI-CD_PROJECT.csproj -c Release -o website/
     
     - name: 📁 Upload a Build Artifact

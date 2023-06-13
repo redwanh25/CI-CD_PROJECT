@@ -13,7 +13,7 @@ jobs:
   restart-app-pool:
    runs-on: windows-2019
    env:
-      server: '103.125.254.20'
+      server: 'Shared 103.125.254.20'
       pool-name: 'ci-cd.redwan.pro'
 
    steps:

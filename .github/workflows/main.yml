@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: 🚀 Build & Publish Website
+name: 🚀 Build & Publish website
 
 on:
   push:
@@ -10,22 +10,39 @@ on:
     branches: [ master ]
 
 jobs:
-  restart-app-pool:
-   runs-on: windows-2019
-   env:
-      server: 'Shared 103.125.254.20'
-      pool-name: 'ci-cd.redwan.pro'
+  build:
+    runs-on: ubuntu-latest
 
-   steps:
-    - name: Checkout
+    steps:
+    - name: 🚚 Get Latest Code
       uses: actions/checkout@v3
-    - name: IIS stop
-      # You may also reference the major or major.minor version
-      uses: im-open/app-pool-action@v2.0.3
+    
+    - name: ⚙️ Setup .NET
+      uses: actions/setup-dotnet@v3
       with:
-        action: 'stop'
-        server: ${{ env.server }}
-        app-pool-name: ${{ env.pool-name }}
-        service-account-id: ${{ secrets.iis_admin_user }}
-        service-account-password: ${{ secrets.iis_admin_password }}
+        dotnet-version: 6.0.x
+    
+    - name: 📙 Restore Dependencies
+      run: dotnet restore
+    
+    - name: 🔨 Build
+      run: dotnet build --no-restore
 
+    - name: 📦 Publish
+      run: dotnet publish CI-CD_PROJECT/CI-CD_PROJECT.csproj -c Release -o website/
+    
+    - name: 📁 Upload Build Artifacts to Local
+      uses: actions/upload-artifact@v3
+      with:
+        name: Build Artifacts
+        path: website/
+        if-no-files-found: error
+        
+    - name: 📂 Upload Build Artifacts to Server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: redwan.pro
+        username: ${{ secrets.ftp_username }}
+        password: ${{ secrets.ftp_password }}
+        local-dir: website/
+        server-dir: ci-cd.redwan.pro/webroot/

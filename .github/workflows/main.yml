@@ -46,3 +46,4 @@ jobs:
         password: ${{ secrets.ftp_password }}
         local-dir: website/
         server-dir: ci-cd.redwan.pro/webroot/
+        dangerous-clean-slate: true

@@ -24,7 +24,7 @@ jobs:
       uses: im-open/app-pool-action@v2.0.3
       with:
         action: 'stop'
-        server: '103.125.254.20'                    #${{ env.server }}
+        server: 103.125.254.20                    #${{ env.server }}
         app-pool-name: 'ci-cd.redwan.pro'           #${{ env.pool-name }}
         service-account-id: 'redwan'                #${{ secrets.iis_admin_user }}
         service-account-password: 's8dagn#$4REj'    #${{ secrets.iis_admin_password }}

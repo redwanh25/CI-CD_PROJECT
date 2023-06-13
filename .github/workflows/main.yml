@@ -24,8 +24,8 @@ jobs:
       uses: im-open/app-pool-action@v2.0.3
       with:
         action: 'stop'
-        server: ${{ env.server }}                   #${{ env.server }}
-        app-pool-name: ${{ env.pool-name }}         #${{ env.pool-name }}
-        service-account-id: redwan                #${{ secrets.iis_admin_user }}
-        service-account-password: s8dagn#$4REj    #${{ secrets.iis_admin_password }}
+        server: ${{ env.server }}
+        app-pool-name: ${{ env.pool-name }}
+        service-account-id: ${{ secrets.iis_admin_user }}
+        service-account-password: ${{ secrets.iis_admin_password }}
 

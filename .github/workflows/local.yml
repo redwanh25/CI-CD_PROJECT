@@ -20,9 +20,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    
-    - name: 🔨 build project
-      run: dotnet build --no-restore
 
     - name: 📦 publish project
       run: dotnet publish -c Release -o .\website

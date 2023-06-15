@@ -31,5 +31,7 @@ jobs:
     
     - name: deploy to IIS
       shell: cmd
-      run: xcopy /s /y .\website\* C:\ci-cd.localhost
-
+      run: |
+        iisreset /stop
+        xcopy /s /y .\website\* C:\ci-cd.localhost
+        iisreset /start

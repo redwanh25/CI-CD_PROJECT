@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - name: 🚚 checkout the current repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
     
     - name: ⚙️ setup .NET
       uses: actions/setup-dotnet@v1
@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 6.0.x
     
     - name: 🔨 build project
-	  run: dotnet build -c Release
+      run: dotnet build -c Release
 
     - name: 📦 publish project
       run: dotnet publish -c Release -o .\website

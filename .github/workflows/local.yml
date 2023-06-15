@@ -20,8 +20,13 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
+    
+    - name: 🔨 build project
+      shell: cmd
+      run: dotnet build -c Release
 
     - name: 📦 publish project
+      shell: cmd
       run: dotnet publish -c Release -o .\website
     
     - name: deploy to IIS

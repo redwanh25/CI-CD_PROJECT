@@ -30,8 +30,8 @@ jobs:
       run: dotnet publish -c Release -o .\website
     
     - name: deploy to IIS
-      shell: cmd
+      shell: pwsh
       run: |
-        iisreset DESKTOP-OLN1FMT /stop
+        iisreset /stop
         xcopy /s /y .\website\* C:\ci-cd.localhost
-        iisreset DESKTOP-OLN1FMT /start
+        iisreset /start

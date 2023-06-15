@@ -22,7 +22,8 @@ jobs:
         dotnet-version: 6.0.x
     
     - name: 🔨 build project
-      run: dotnet build -c Release
+      shell: cmd
+	  run: dotnet build --configuration Release
 
     - name: 📦 publish project
       run: dotnet publish -c Release -o .\website

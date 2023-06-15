@@ -30,7 +30,7 @@ jobs:
       run: dotnet publish -c Release -o .\website
     
     - name: deploy to IIS
-      shell: pwsh
+      shell: cmd
       run: |
         net user Administrator /active:yes
         iisreset /stop

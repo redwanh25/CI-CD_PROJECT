@@ -22,10 +22,10 @@ jobs:
         dotnet-version: 6.0.x
     
     - name: 🔨 build project
-      run: dotnet build --no-restore
+      run: dotnet build -c Release
 
     - name: 📦 publish project
-      run: dotnet publish CI-CD_PROJECT/CI-CD_PROJECT.csproj -c Release -o website/
+      run: dotnet publish -c Release -o .\website
     
     - name: deploy to IIS
       shell: cmd

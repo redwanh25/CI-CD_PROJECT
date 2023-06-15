@@ -32,7 +32,6 @@ jobs:
     - name: deploy to IIS
       shell: cmd
       run: |
-        iisreset /stop /timeout:60
-        taskkill /F /FI "SERVICES eq was"
+        iisreset /stop
         xcopy /s /y .\website\* C:\ci-cd.localhost
         iisreset /start

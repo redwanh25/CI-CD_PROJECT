@@ -33,5 +33,7 @@ jobs:
       shell: cmd
       run: |
         iisreset %DESKTOP-OLN1FMT% /stop
+        pause
         xcopy /s /y .\website\* C:\ci-cd.localhost
         iisreset %DESKTOP-OLN1FMT% /start
+        pause

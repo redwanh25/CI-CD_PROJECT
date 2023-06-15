@@ -32,8 +32,6 @@ jobs:
     - name: deploy to IIS
       shell: cmd
       run: |
-        iisreset %DESKTOP-OLN1FMT% /stop
-        pause
+        iisreset DESKTOP-OLN1FMT /stop
         xcopy /s /y .\website\* C:\ci-cd.localhost
-        iisreset %DESKTOP-OLN1FMT% /start
-        pause
+        iisreset DESKTOP-OLN1FMT /start

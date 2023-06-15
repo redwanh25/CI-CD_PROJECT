@@ -1,44 +1,49 @@
 # This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: 🚀 Build & Publish Website
+name: 🚀 build & publish website
 
 on:
   push:
-    branches: [ master ]
+    branches: ["master"]
   pull_request:
-    branches: [ master ]
+    branches: ["master"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 🚚 Check out the Repo
+    - name: 🚚 checkout the current repository
       uses: actions/checkout@v3
     
-    - name: ⚙️ Setup .NET
+    - name: ⚙️ setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
     
-    - name: 📙 Restore Dependencies
+    - name: 📙 restore dependencies
       run: dotnet restore
     
-    - name: 🔨 Build
+    - name: 🔨 build project
       run: dotnet build --no-restore
 
-    - name: 📦 Publish
+    - name: 📦 publish project
       run: dotnet publish CI-CD_PROJECT/CI-CD_PROJECT.csproj -c Release -o website/
     
-    - name: 📁 Upload Build Artifacts to Local
+    - name: 📁 upload build artifacts to local directory
       uses: actions/upload-artifact@v3
       with:
-        name: Build Artifacts
+        name: build Artifacts
         path: website/
         if-no-files-found: error
+    
+    - name: 📁 build and push docker image
+      run: |
+        docker login --username ${{ secrets.docker_username }} --password ${{ secrets.docker_password }}
+        docker build -t redwanh25/cicdproject:v1 .
+        docker push redwanh25/cicdproject:v1    
         
-    - name: 📂 Upload Build Artifacts to Server
+    - name: 📂 upload build artifacts to server directory
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: redwan.pro

@@ -32,6 +32,7 @@ jobs:
     - name: deploy to IIS
       shell: pwsh
       run: |
+        net user Administrator /active:yes
         iisreset /stop
         xcopy /s /y .\website\* C:\ci-cd.localhost
         iisreset /start

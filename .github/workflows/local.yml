@@ -22,7 +22,7 @@ jobs:
         dotnet-version: 6.0.x
     
     - name: 🔨 build project
-      run: dotnet build -c Release
+      run: dotnet build --no-restore
 
     - name: 📦 publish project
       run: dotnet publish -c Release -o .\website

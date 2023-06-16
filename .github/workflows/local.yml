@@ -33,5 +33,4 @@ jobs:
       shell: cmd
       run: |
         %systemroot%\system32\inetsrv\appcmd stop site "ci-cd.localhost"
-        xcopy /s /y .\website\* C:\ci-cd.localhost
         %systemroot%\system32\inetsrv\appcmd start site "ci-cd.localhost"

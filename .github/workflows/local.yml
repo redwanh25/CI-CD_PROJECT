@@ -1,4 +1,4 @@
-# This workflow will build a .NET project
+# This workflow will build and deploy a .NET project
 
 name: 🚀 build & publish website to local host
 

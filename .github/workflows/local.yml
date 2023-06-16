@@ -31,7 +31,8 @@ jobs:
     
     - name: deploy to IIS
       shell: cmd
-      run: |
+      run: xcopy /s /y .\website\* C:\ci-cd.localhost
+
         #%windir%\system32\inetsrv\appcmd stop APPPOOL "ci-cd.localhost"
-        xcopy /s /y .\website\* C:\ci-cd.localhost
+        #xcopy /s /y .\website\* C:\ci-cd.localhost
         #%windir%\system32\inetsrv\appcmd start APPPOOL "ci-cd.localhost"

@@ -15,7 +15,7 @@ namespace CI_CD_PROJECT.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Name = "Redwan";
+            ViewBag.Name = "Redwa n";
             return View();
         }
 

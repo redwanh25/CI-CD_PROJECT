@@ -1,6 +1,6 @@
 # This workflow will build and deploy a .NET project
 
-name: 🚀 build & publish website to local host
+name: 🚀 build & publish website
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: 🚚 checkout the current repository
@@ -21,30 +21,33 @@ jobs:
       with:
         dotnet-version: 6.0.x
     
+    - name: 📙 restore dependencies
+      run: dotnet restore
+    
     - name: 🔨 build project
-      shell: cmd
-      run: dotnet build -c Release
+      run: dotnet build --no-restore
 
     - name: 📦 publish project
-      shell: cmd
-      run: dotnet publish -c Release -o .\website
+      run: dotnet publish CI-CD_PROJECT/CI-CD_PROJECT.csproj -c Release -o website/
     
-    - name: deploy to IIS
-      shell: cmd
-      run: xcopy /s /y .\website\* C:\ci-cd.localhost
+    - name: 📁 upload build artifacts to local directory for future download
+      uses: actions/upload-artifact@v3
+      with:
+        name: build Artifacts
+        path: website/
+        if-no-files-found: error
+    
+    - name: 📁 build and push docker image
+      run: |
+        docker login --username ${{ secrets.docker_username }} --password ${{ secrets.docker_password }}
+        docker build -t redwanh25/cicdproject:v1 .
+        docker push redwanh25/cicdproject:v1
         
-        #--------------------------------------------------------------------
-        #%windir%\system32\inetsrv\appcmd stop APPPOOL "ci-cd.localhost"
-        #xcopy /s /y .\website\* C:\ci-cd.localhost
-        #%windir%\system32\inetsrv\appcmd start APPPOOL "ci-cd.localhost"    
-        #--------------------------------------------------------------------
-        #%systemroot%\system32\inetsrv\appcmd stop site "ci-cd.localhost"
-        #%systemroot%\system32\inetsrv\appcmd stop apppool "ci-cd.localhost"
-        #xcopy /s /y .\website\* C:\ci-cd.localhost
-        #%systemroot%\system32\inetsrv\appcmd start apppool "ci-cd.localhost"
-        #%systemroot%\system32\inetsrv\appcmd start site "ci-cd.localhost"
-        #--------------------------------------------------------------------
-        #iisreset /stop
-        #xcopy /s /y .\website\* C:\ci-cd.localhost
-        #iisreset /start
-        #--------------------------------------------------------------------
+    - name: 📂 upload build artifacts to server directory
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: redwan.pro
+        username: ${{ secrets.ftp_username }}
+        password: ${{ secrets.ftp_password }}
+        local-dir: website/
+        server-dir: ci-cd.redwan.pro/webroot/
